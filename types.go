@@ -8,12 +8,17 @@ type Verification struct {
 	Status          string                 `json:"status"`
 	PolicyID        string                 `json:"policy_id,omitempty"`
 	RequestedClaims []string               `json:"requested_claims"`
-	OutputClaims    map[string]interface{} `json:"output_claims,omitempty"`
-	HostedURL       string                 `json:"hosted_url"`
-	Metadata        map[string]interface{} `json:"metadata,omitempty"`
-	CreatedAt       time.Time              `json:"created_at"`
-	CompletedAt     *time.Time             `json:"completed_at,omitempty"`
-	ExpiresAt       *time.Time             `json:"expires_at,omitempty"`
+	// OutputClaims contains full claim values (sandbox environment only).
+	// In production, use VerifiedClaims instead.
+	OutputClaims map[string]interface{} `json:"output_claims,omitempty"`
+	// VerifiedClaims contains list of claim names that were verified (production).
+	// Actual values are masked for PII protection. In sandbox, use OutputClaims.
+	VerifiedClaims []string               `json:"verified_claims,omitempty"`
+	HostedURL      string                 `json:"hosted_url"`
+	Metadata       map[string]interface{} `json:"metadata,omitempty"`
+	CreatedAt      time.Time              `json:"created_at"`
+	CompletedAt    *time.Time             `json:"completed_at,omitempty"`
+	ExpiresAt      *time.Time             `json:"expires_at,omitempty"`
 }
 
 // CreateVerificationParams are the parameters for creating a verification.
